@@ -1,0 +1,42 @@
+{
+  "name": "hapi-token-docs",
+  "author": "Glenn Jones",
+  "version": "0.0.1",
+  "description": "A example site using HAPI, JWT tokens and swagger documentation",
+  "keywords": [
+    "example",
+    "calulator",
+    "hapi",
+    "jwt",
+    "token",
+    "swagger",
+    "documentation",
+    "api"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/glennjones/hapi-token-docs.git"
+  },
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "blipp": "^2.3.0",
+    "boom": "^3.1.2",
+    "convert-base": "^0.1.0",
+    "handlebars": "^4.0.5",
+    "hapi": "^13.0.x",
+    "hapi-auth-jwt2": "^5.7.0",
+    "hapi-swagger": "glennjones/hapi-swagger",
+    "hoek": "^3.0.4",
+    "inert": "^3.2.0",
+    "joi": "8.0.5",
+    "jsonwebtoken": "^5.7.0",
+    "mongoose": "^4.1.0",
+    "vision": "^4.0.1"
+  },
+  "engines": {
+    "node": ">= 4.0.x"
+  }
+}
