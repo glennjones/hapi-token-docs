@@ -89,7 +89,7 @@
                     auth = swaggerApi.auths[0].value;
                     $('#input_apiKey').show();
                 }
-                //addApiKeyAuthorization();
+                addApiKeyAuthorization();
             },
             onFailure: function (data) {
                 log("Unable to Load SwaggerUI");
@@ -115,6 +115,7 @@
 
         $('#input_apiKey').change(addApiKeyAuthorization);
 
+
         /*
         // if you have an apiKey you would like to pre-populate on the page for demonstration purposes...
 
@@ -125,6 +126,7 @@
 
 
         window.swaggerUi.load();
+
 
         function log() {
             if ('console' in window) {
@@ -159,9 +161,9 @@
     <div class="wrapper">
         <header>
             {{#if hapiSwagger.info.title}}
-                <h1 class="home-link"><a href="/">{{hapiSwagger.info.title}}</a></h1>
+                <h1 class="home-link">{{hapiSwagger.info.title}}</h1>
             {{else}}
-                <h1 class="home-link"><a href="/">{{{title}}}</a></h1>
+                <h1 class="home-link">{{{title}}}</h1>
             {{/if}}
         </header>
 
@@ -172,15 +174,17 @@
         {{/if}}
 
 
-        <form id='api_selector' onsubmit="return false">
+
             <div class='input'>
+
+                <form id='api_selector' onsubmit="return false">
+                <input placeholder="api_key" id="input_apiKey" style="display:none" name="apiKey" type="hidden" value="{{token}}"/>
+                </form>
+
                 <h2>API Access</h2>
-                <p>You need to sign in and get an API token to access some of the APIs functionality.</p>
-                <label for="input_apiKey">API Token</label>
-                <input placeholder="api_key" id="input_apiKey" style="display:none" name="apiKey" type="text"/>
-                <a href="/login">Get token</a>
+                {{> account home=true}}
             </div>
-        </form>
+
 
 
         <section class="swagger-section">
@@ -198,7 +202,7 @@
              </section>
         {{/if}}
 
-
+         {{> footer}}
 
      </div>
 

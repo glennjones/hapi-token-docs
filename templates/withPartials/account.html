@@ -1,0 +1,12 @@
+{{#if token}}
+    <p>{{name}}</p>
+    <p><strong>Your API token</strong>: {{#if home}} (Its automatically added to the request you make from the forms below) {{/if}}
+    <div style="word-break: break-all">{{token}}</div>
+    </p>
+    {{#if home}}<a href="/account">Account</a>{{else}}<a href="/">API</a>{{/if}} | <a href="/logout">Sign out</a>
+{{else}}
+    <p>You need to sign in and get an API token to access some of the APIs functionality.</p>
+        <form method="GET" action="/login">
+        <button class="btn-si btn-github">Sign in with GitHub </button>
+        </form>
+{{/if}}
