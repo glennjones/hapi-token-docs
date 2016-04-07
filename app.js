@@ -119,7 +119,7 @@ server.register([
         server.auth.strategy('hapi-token-docs-cookie', 'cookie', {
             password: process.env.COOKIE_PASSWORD,
             cookie: 'hapi-token-docs',
-            isSecure: false
+            isSecure: true
         });
 
         server.auth.strategy('github-oauth', 'bell', {
@@ -127,7 +127,8 @@ server.register([
             password: process.env.GITHUB_PASSWORD,
             clientId: process.env.GITHUB_CLIENTID,
             clientSecret: process.env.GITHUB_CLIENTSECRET,
-            isSecure: false
+            isSecure: true,
+            forceHttps: true
         });
 
         server.auth.strategy('jwt', 'jwt', {
@@ -156,3 +157,6 @@ server.views({
     helpersPath: './templates/helpers',
     isCached: false
 })
+
+
+
