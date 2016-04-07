@@ -30,6 +30,7 @@
     "hapi": "^13.0.x",
     "hapi-auth-cookie": "^6.1.1",
     "hapi-auth-jwt2": "^5.7.0",
+    "hapi-require-https": "^2.0.5",
     "hapi-swagger": "glennjones/hapi-swagger",
     "hoek": "^3.0.4",
     "inert": "^3.2.0",

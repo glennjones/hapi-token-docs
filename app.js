@@ -4,6 +4,7 @@ const Inert = require('inert');
 const Vision = require('vision');
 const Blipp = require('blipp');
 const Hoek = require('hoek');
+const RequireHttps = require('hapi-require-https');
 const JWT = require('jsonwebtoken');
 const HapiJWT2 = require('hapi-auth-jwt2');
 const Bell = require('bell');
@@ -100,6 +101,7 @@ var validate = function (decoded, request, callback) {
 
 // register plug-ins
 server.register([
+    RequireHttps,
     AuthCookie,
     Bell,
     HapiJWT2,
