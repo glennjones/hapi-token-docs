@@ -20,8 +20,28 @@ The API is a simple calculator that allows you to add, subtract, divide or multi
 
 Learn more about the JSON Web Tokens at https://jwt.io/
 
+## Trying out the demo on your local computer
+You need have git, node.js and mongodb install on your computer and github account
 
-
+1. From a commandline run `$ git clone https://github.com/glennjones/hapi-token-docs.git`
+2. Move into the project directory `$ cd hapi-token-docs`
+3. Logon to Github and go to https://github.com/settings/developers
+4. Click the "Register new application" use "http://localhost:3033" two url fields
+5. Once created make a note of the "Client ID" and "Client Secret"
+6. Create a new file called `.env` this will store our environment variables
+7. Within the `.env` file add the following lines text changing the values
+```
+PRIVATEKEY=some-text
+COOKIE_PASSWORD=some-text-more-than-32-chars
+GITHUB_PASSWORD=some-text-more-than-32-chars
+GITHUB_CLIENTID=client-id-you-just-got-from-github
+GITHUB_CLIENTSECRET=client-secret-you-just-got-from-github
+ISSUCURE=false
+```
+8. Run `$ npm install`
+9. Start the mongodb server `$ mongod`
+10. Run `$ node app`
+11. Connect to the server using `http://localhost:3033`
 
 ## Lab test
 The project has a few unit tests. To run the test within the project type one of the following commands.
