@@ -26,6 +26,7 @@
     "blipp": "^2.3.0",
     "boom": "^3.1.2",
     "convert-base": "^0.1.0",
+    "dotenv": "^2.0.0",
     "handlebars": "^4.0.5",
     "hapi": "^13.0.x",
     "hapi-auth-cookie": "^6.1.1",

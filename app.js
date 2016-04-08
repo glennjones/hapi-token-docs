@@ -1,4 +1,5 @@
 'use strict';
+require('dotenv').config();
 const Hapi = require('hapi');
 const Inert = require('inert');
 const Vision = require('vision');
@@ -107,7 +108,10 @@ server.register([
     HapiJWT2,
     Inert,
     Vision,
-    Blipp,
+    {
+        register: Blipp,
+        options: {showAuth: true}
+    },
     {
         register: require('hapi-swagger'),
         options: swaggerOptions
