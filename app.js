@@ -25,7 +25,7 @@ const appendAuthMessages = function (routes) {
                 }
 
                 if (route.config.auth === 'jwt') {
-                    route.config.notes.push('__Token is required to access this endpoint. Make sure your sign in.__');
+                    route.config.notes.push('__Token is required to access this endpoint. Make sure you are signed in.__');
                 }
             }
         }
