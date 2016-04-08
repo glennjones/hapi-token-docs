@@ -1,97 +1,116 @@
 'use strict';
+const Code = require('code');
+const Lab = require('lab');
+const maths = require('../lib/maths');
 
-var chai		= require('chai'),
-	assert		= chai.assert,
-	maths       = require('../lib/maths');
-
-// units tests math.js 
-
-describe('maths', function(){
+const expect = Code.expect;
+const lab = exports.lab = Lab.script();
 
 
-	it('should add numbers together', function(done){
-		var options = {
-			a: 5,
-			b: 5
-		};
-		maths.add(options, function(error, result){
-			assert.equal(result, 10, '5 + 5 should = 10');
-			assert.equal(error, null, '5 + 5 should = 10 without error');
-			done();
-		});
-	});
+// units tests math.js
 
-	it('should capture type errors', function(done){
-		var options = {
-			a: 'text',
-			b: 5
-		};
-		maths.add(options, function(error, result){
-			assert.equal(result, null, 'if input is not a number return null');
-			assert.equal(error, 'The one of the two numbers was not provided', 'if a input is not a number throw error');
-			done();
-		});
-	});
+lab.experiment('Math', () => {
 
-	it('should capture missing input errors', function(done){
-		var options = {
-			a: '5'
-		};
-		maths.add(options, function(error, result){
-			assert.equal(result, null, 'if we are missing input is not a number return null');
-			assert.equal(error, 'The one of the two numbers was not provided', 'if we are missing input throw error');
-			done();
-		});
-	});
+    lab.test('should add numbers together', (done) => {
 
-	it('should subtract numbers', function(done){
-		var options = {
-			a: 10,
-			b: 5
-		};
-		maths.subtract(options, function(error, result){
-			assert.equal(result, 5, '10 - 5 should = 5');
-			assert.equal(error, null, '10 - 5 should = 5 without error');
-			done();
-		});
-	});
+        let options = {
+            a: 5,
+            b: 5
+        };
+        maths.add(options, (error, result) => {
 
-	it('should divide numbers', function(done){
-		var options = {
-			a: 10,
-			b: 5
-		};
-		maths.divide(options, function(error, result){
-			assert.equal(result, 2, '10 / 5 should = 2');
-			assert.equal(error, null, '10 / 5 should = 2 without error');
-			done();
-		});
-	});
-
-	it('should divide capture divide by zero errors', function(done){
-		var options = {
-			a: 10,
-			b: 0
-		};
-		maths.divide(options, function(error, result){
-			assert.equal(result, null, 'should return null for dividing by zero error');
-			assert.equal(error, 'One of the supplied numbers is set zero. You cannot divide by zero.', 'should throw an error for dividing by zero');
-			done();
-		});
-	});
-
-	it('should multiple numbers', function(done){
-		var options = {
-			a: 10,
-			b: 5
-		};
-		maths.multiple(options, function(error, result){
-			assert.equal(result, 50, '10 * 5 should = 50');
-			assert.equal(error, null, '10 * 5 should = 50 without error');
-			done();
-		});
-	});
+            expect(result).to.equal(10);
+            expect(error).to.equal(null);
+            done();
+        });
+    });
 
 
+    lab.test('should capture type errors', (done) => {
+
+        let options = {
+            a: 'text',
+            b: 5
+        };
+        maths.add(options, (error, result) => {
+
+            expect(result).to.equal(null);
+            expect(error).to.equal('The one of the two numbers was not provided');
+            done();
+        });
+    });
+
+
+    lab.test('should capture missing input errors', (done) => {
+
+        let options = {
+            a: '5'
+        };
+        maths.add(options, (error, result) => {
+
+            expect(result).to.equal(null);
+            expect(error).to.equal('The one of the two numbers was not provided');
+            done();
+        });
+    });
+
+
+    lab.test('should subtract numbers', (done) => {
+
+        let options = {
+            a: 10,
+            b: 5
+        };
+        maths.subtract(options, (error, result) => {
+
+            expect(result).to.equal(5);
+            expect(error).to.equal(null);
+            done();
+        });
+    });
+
+
+    lab.test('should divide numbers', (done) => {
+
+        let options = {
+            a: 10,
+            b: 5
+        };
+        maths.divide(options, (error, result) => {
+            expect(result).to.equal(2);
+            expect(error).to.equal(null);
+            done();
+        });
+    });
+
+
+    lab.test('should divide capture divide by zero errors', (done) => {
+
+        let options = {
+            a: 10,
+            b: 0
+        };
+        maths.divide(options, (error, result) => {
+
+            expect(result).to.equal(null);
+            expect(error).to.equal('One of the supplied numbers is set zero. You cannot divide by zero.');
+            done();
+        });
+    });
+
+
+    lab.test('should multiple numbers', (done) => {
+
+        let options = {
+            a: 10,
+            b: 5
+        };
+        maths.multiple(options, (error, result) => {
+
+            expect(result).to.equal(50);
+            expect(error).to.equal(null);
+            done();
+        });
+    });
 
 });

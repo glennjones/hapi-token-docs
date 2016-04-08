@@ -21,3 +21,19 @@ The API is a simple calculator that allows you to add, subtract, divide or multi
 Learn more about the JSON Web Tokens at https://jwt.io/
 
 
+
+
+## Lab test
+The project has a few unit tests. To run the test within the project type one of the following commands.
+```bash
+$ lab
+$ lab -r html -o coverage.html
+$ lab -r html -o coverage.html --lint
+$ lab -r console -o stdout -r html -o coverage.html --lint
+```
+
+If you are considering sending a pull request please add tests for the functionality you add or change.
+
+
+## Issues
+If you find any issue please file here on github and I will try and fix them.

@@ -10,6 +10,7 @@ lib-cov
 data.json
 lcov.info
 coverage.html
+endpoint-test.js
 
 node_modules
 npm-debug.log

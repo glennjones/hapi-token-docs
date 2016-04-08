@@ -6,7 +6,6 @@ const Vision = require('vision');
 const Blipp = require('blipp');
 const Hoek = require('hoek');
 const RequireHttps = require('hapi-require-https');
-const JWT = require('jsonwebtoken');
 const HapiJWT2 = require('hapi-auth-jwt2');
 const Bell = require('bell');
 const AuthCookie = require('hapi-auth-cookie');
@@ -14,40 +13,40 @@ const Pack = require('./package');
 const Routes = require('./lib/routes.js');
 
 
-const appendAuthMessages = function( routes ){
+const appendAuthMessages = function (routes) {
 
-    routes.forEach( (route) => {
-        if(Hoek.reach(route, 'config.tags')){
+    routes.forEach((route) => {
+        if (Hoek.reach(route, 'config.tags')) {
             const tags = Hoek.reach(route, 'config.tags');
-            if(tags.indexOf('api') > -1){
+            if (tags.indexOf('api') > -1) {
 
-                if(!route.config.notes){
-                    route.config.notes = []
+                if (!route.config.notes) {
+                    route.config.notes = [];
                 }
 
-                if(route.config.auth === 'jwt'){
+                if (route.config.auth === 'jwt') {
                     route.config.notes.push('__Token is required to access this endpoint. Make sure your sign in.__');
                 }
             }
         }
     });
-}
+};
 
-appendAuthMessages( Routes );
+appendAuthMessages(Routes);
 
 
 const privateKey = process.env.PRIVATEKEY;
 const info = {
-        version: Pack.version,
-        title: 'Hapi - token - docs',
-        description: 'This web API was built to demonstrate some of the hapi features and functionality.'
-    }
+    version: Pack.version,
+    title: 'Hapi - token - docs',
+    description: 'This web API was built to demonstrate some of the hapi features and functionality.'
+};
 
 
 const server = new Hapi.Server({
     app: {
         'privateKey': privateKey,
-        'info': info,
+        'info': info
     }
 });
 server.connection({
@@ -93,65 +92,76 @@ var validate = function (decoded, request, callback) {
     // add yours checks here i.e. is the user valid
     if (decoded.id && decoded.name) {
         return callback(null, true, decoded);
-    } else {
-        return callback(null, false);
     }
+    return callback(null, false);
+
 };
 
 
-
-// register plug-ins
+// register auth plugins and strategies before anything else
 server.register([
     RequireHttps,
     AuthCookie,
     Bell,
-    HapiJWT2,
+    HapiJWT2
+], function (err) {
+
+    if (err) {
+        console.log(err);
+    }
+
+    server.auth.strategy('hapi-token-docs-cookie', 'cookie', {
+        password: process.env.COOKIE_PASSWORD,
+        cookie: 'hapi-token-docs',
+        isSecure: true
+    });
+
+    server.auth.strategy('github-oauth', 'bell', {
+        provider: 'github',
+        password: process.env.GITHUB_PASSWORD,
+        clientId: process.env.GITHUB_CLIENTID,
+        clientSecret: process.env.GITHUB_CLIENTSECRET,
+        isSecure: true,
+        forceHttps: true
+    });
+
+    server.auth.strategy('jwt', 'jwt', {
+        key: privateKey,
+        validateFunc: validate,
+        verifyOptions: { algorithms: ['HS256'] }
+    });
+
+    server.auth.default('hapi-token-docs-cookie');
+});
+
+
+
+// register other plugins and start
+server.register([
     Inert,
     Vision,
     {
         register: Blipp,
-        options: {showAuth: true}
+        options: { showAuth: true }
     },
     {
         register: require('hapi-swagger'),
         options: swaggerOptions
     }
-    ], function (err) {
+], function (err) {
 
-        if(err){
-            console.log(err);
-        }
+    if (err) {
+        console.log(err);
+    }
 
-        server.auth.strategy('hapi-token-docs-cookie', 'cookie', {
-            password: process.env.COOKIE_PASSWORD,
-            cookie: 'hapi-token-docs',
-            isSecure: true
-        });
+    // add routes
+    server.route(Routes);
 
-        server.auth.strategy('github-oauth', 'bell', {
-            provider: 'github',
-            password: process.env.GITHUB_PASSWORD,
-            clientId: process.env.GITHUB_CLIENTID,
-            clientSecret: process.env.GITHUB_CLIENTSECRET,
-            isSecure: true,
-            forceHttps: true
-        });
+    server.start(function () {
 
-        server.auth.strategy('jwt', 'jwt', {
-            key: privateKey,
-            validateFunc: validate,
-            verifyOptions: { algorithms: [ 'HS256' ] }
-        });
-
-        server.auth.default('hapi-token-docs-cookie');
-
-        // add routes
-        server.route(Routes);
-
-        server.start(function(){
-            console.log('Server running at:', server.info.uri);
-        });
+        console.log('Server running at:', server.info.uri);
     });
+});
 
 
 
@@ -162,7 +172,4 @@ server.views({
     partialsPath: './templates/withPartials',
     helpersPath: './templates/helpers',
     isCached: false
-})
-
-
-
+});
