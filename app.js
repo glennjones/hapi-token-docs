@@ -113,7 +113,7 @@ server.register([
     server.auth.strategy('hapi-token-docs-cookie', 'cookie', {
         password: process.env.COOKIE_PASSWORD,
         cookie: 'hapi-token-docs',
-        isSecure: true
+        isSecure: process.env.ISSUCURE
     });
 
     server.auth.strategy('github-oauth', 'bell', {
@@ -121,8 +121,8 @@ server.register([
         password: process.env.GITHUB_PASSWORD,
         clientId: process.env.GITHUB_CLIENTID,
         clientSecret: process.env.GITHUB_CLIENTSECRET,
-        isSecure: true,
-        forceHttps: true
+        isSecure: process.env.ISSUCURE,
+        forceHttps: process.env.ISSUCURE
     });
 
     server.auth.strategy('jwt', 'jwt', {
